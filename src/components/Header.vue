@@ -1,9 +1,7 @@
 <template>
   <header>
-    <h3>
-      {{ title }}
-    </h3>
-    <Button btnCls="btn btn-secondary btn-sm" text="Add Task" />
+    <h3>{{ title }}</h3>
+    <Button @click="$emit('btn-clicked')" btnCls="btn btn-secondary btn-sm" text="Task" />
   </header>
 </template>
 

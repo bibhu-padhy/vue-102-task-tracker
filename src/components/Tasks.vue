@@ -2,16 +2,14 @@
   <div
     @dblclick="doubleClicked(task.id)"
     :class="[task.reminder ? 'reminder' : '', 'task_container']"
-    v-for="task in tasksArr"
-    v-bind:key="task.id"
+    v-for="(task,index) in tasksArr"
+    v-bind:key="index"
   >
     <div class="task_text">
       {{ task.text }}
       <div @click="$emit('delete-task', task.id)">x</div>
     </div>
-    <div class="task_day">
-      {{ task.day }}
-    </div>
+    <div class="task_day">{{ task.day }}</div>
   </div>
 </template>
 
@@ -19,7 +17,7 @@
 export default {
   name: "Tasks",
   props: {
-    tasksArr: Array,
+    tasksArr: [],
   },
   methods: {
     doubleClicked(id) {

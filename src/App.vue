@@ -1,34 +1,40 @@
 <template>
   <div class="main_container">
-    <Header title="Task Tracker!" />
-    <Tasks
-      @double-click="doubleClicked"
-      @delete-task="deleteTask"
-      v-bind:tasksArr="tasks"
-    />
+    <Header @btn-clicked="toggleTaskForm = !toggleTaskForm" title="Task Tracker!" />
+    <TaskForm v-if="toggleTaskForm" @add-task="addTask" />
+    <Tasks @double-click="doubleClicked" @delete-task="deleteTask" v-bind:tasksArr="tasks" />
   </div>
 </template>
 
 <script>
 import Header from "./components/Header.vue";
 import Tasks from "./components/Tasks.vue";
+import TaskForm from "./components/TaskForm.vue"
+
 export default {
   name: "App",
   components: {
     Header,
     Tasks,
+    TaskForm,
   },
   methods: {
     doubleClicked(id) {
-      this.tasks = this.tasks.map(task=>{})
+      this.tasks = this.tasks.map((task) => task.id === id ? {
+        ...task, reminder: !task.reminder
+      } : task);
     },
     deleteTask(id) {
-      console.log(id);
+      this.tasks = this.tasks.filter((d) => d.id != id);
     },
+    addTask(data) {
+      this.tasks.push(data)
+    }
   },
   data() {
     return {
       tasks: [],
+      toggleTaskForm: false
     };
   },
   created() {
